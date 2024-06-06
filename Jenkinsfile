@@ -3,18 +3,20 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'iris-scheduler'
+        IMAGE_TAG = '0.1.0'
         DOCKERFILE = 'Dockerfile.scheduler'
         CONTEXT_DIR = '.'
+        FULL_IMAGE_NAME = "${IMAGE_NAME}:${IMAGE_TAG}"
     }
 
     stages {
         stage('Check Image Exists') {
             steps {
                 script {
-                    def img = sh(script: "docker images -q ${IMAGE_NAME}", returnStdout: true).trim()
+                    def img = sh(script: "docker images -q ${FULL_IMAGE_NAME}", returnStdout: true).trim()
                     if (img == "") {
                         echo "Image does not exist"
-                        sh "docker build -t ${IMAGE_NAME} -f ${DOCKERFILE} ${CONTEXT_DIR}"
+                        sh "docker build -t ${FULL_IMAGE_NAME} -f ${DOCKERFILE} ${CONTEXT_DIR}"
                     } else {
                         echo "Image exists, skipping build"
                     }
@@ -24,7 +26,7 @@ pipeline {
 
         stage('Run Docker Container') {
             steps {
-                sh "docker run --rm ${IMAGE_NAME}"
+                sh "docker run --rm ${FULL_IMAGE_NAME}"
             }
         }
     }
