@@ -1,0 +1,38 @@
+FROM python:3.10.11-slim as requirements-stage
+
+WORKDIR /tmp
+
+# Install pipx
+RUN pip install pipx
+
+# Install Poetry
+RUN pipx install poetry
+
+# Add Poetry's bin to the PATH
+ENV PATH="/root/.local/bin:${PATH}"
+
+# Copy the poetry files
+COPY ./pyproject.toml ./poetry.lock* /tmp/
+
+# When using Poetry, it would make sense to use Docker multi-stage builds 
+# because you don't really need to have Poetry and its dependencies 
+# installed in the final container image, you only need to have the generated 
+# requirements.txt file to install your project dependencies.
+RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
+
+FROM python:3.10.11-slim
+
+WORKDIR /app
+
+COPY --from=requirements-stage /tmp/requirements.txt /app/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
+
+COPY ./scheduler /app/scheduler
+
+# COPY ./resources /code/resources
+
+# COPY ./models /code/models
+
+# Run the application using the Python module
+CMD ["python", "/app/scheduler/task.py"]

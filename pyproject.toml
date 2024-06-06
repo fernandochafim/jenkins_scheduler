@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "irisapi"
+version = "0.1.0"
+description = ""
+authors = ["Fernando Chafim <fernandochafim@gmail.com>"]
+readme = "README.md"
+packages = [
+    { include = "app" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+numpy = "^1.26.4"
+scikit-learn = "1.0.2"
+uvicorn = "^0.30.1"
+fastapi = "^0.111.0"
+omegaconf = "^2.3.0"
+
+
+[tool.poetry.scripts]
+app-start = "app:start_app"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
