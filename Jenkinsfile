@@ -7,6 +7,7 @@ pipeline {
         DOCKERFILE = 'Dockerfile.scheduler'
         CONTEXT_DIR = '.'
         FULL_IMAGE_NAME = "${IMAGE_NAME}:${IMAGE_TAG}"
+        NETWORK_NAME = 'iris-network'
     }
 
     stages {
@@ -26,7 +27,7 @@ pipeline {
 
         stage('Run Docker Container') {
             steps {
-                sh "docker run --rm ${FULL_IMAGE_NAME}"
+                sh "docker run --rm --network ${NETWORK_NAME} ${FULL_IMAGE_NAME}"
             }
         }
     }

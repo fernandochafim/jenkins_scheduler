@@ -1,7 +1,7 @@
 import requests
 
 # API URL
-url = 'http://localhost:8000/predict'
+url = 'http://iris-api:8000/predict'
 
 # Data to be sent as JSON
 data = {
