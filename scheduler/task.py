@@ -16,8 +16,8 @@ headers = {
     'Content-Type': 'application/json'
 }
 
-# Sending the POST request
-response = requests.post(url, json=data, headers=headers)
+# Sending the GET request
+response = requests.get(url, json=data, headers=headers)
 
 # Checking if the request was successful
 if response.status_code == 200:
