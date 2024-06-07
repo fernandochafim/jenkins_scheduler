@@ -19,9 +19,12 @@ HEADERS = {'Content-Type': 'application/json'}
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def send_request(url, data, headers):
+def send_request(url, data, headers, method='GET'):
     try:
-        response = requests.get(url, json=data, headers=headers)
+        if method == 'GET':
+            response = requests.get(url, params=data, headers=headers)
+        elif method == 'POST':
+            response = requests.post(url, json=data, headers=headers)
         response.raise_for_status()
         return response
     except requests.RequestException as e:
@@ -31,7 +34,7 @@ def send_request(url, data, headers):
 def deploy_model(model_name):
     url = f"{API_URL}/load"
     data = {"model_name": model_name}
-    response = send_request(url, data, HEADERS)
+    response = send_request(url, data, HEADERS, method='POST')
     if response and response.status_code == 200:
         logging.info("Model deployed successfully!")
         logging.info(response.json())
