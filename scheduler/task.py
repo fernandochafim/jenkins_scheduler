@@ -22,7 +22,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 def send_request(url, data, headers, method='GET'):
     try:
         if method == 'GET':
-            response = requests.get(url, params=data, headers=headers)
+            response = requests.request('GET', url, json=data, headers=headers)
         elif method == 'POST':
             response = requests.post(url, json=data, headers=headers)
         response.raise_for_status()
@@ -69,7 +69,7 @@ def fetch_current_model_name():
         "petallength": 1.3,
         "petalwidth": 1.4
     }
-    response = send_request(url, data, HEADERS)
+    response = send_request(url, data, HEADERS, method='GET')
     if response:
         response_data = response.json()
         return response_data.get('model')
