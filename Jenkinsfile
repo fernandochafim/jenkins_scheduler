@@ -27,7 +27,7 @@ pipeline {
 
         stage('Run Docker Container') {
             steps {
-                sh "docker run --rm --network ${NETWORK_NAME} ${FULL_IMAGE_NAME}"
+                sh "docker run --rm --network ${NETWORK_NAME} -v $(pwd)/models:/app/models -v $(pwd)/data:/app/data ${FULL_IMAGE_NAME}"
             }
         }
     }

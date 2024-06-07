@@ -12,8 +12,8 @@ from sklearn.metrics import classification_report
 
 # Configuration
 API_URL = 'http://iris-api-new:8000'
-MODELS_DIR = './models/'
-DATA_DIR = './data/'
+MODELS_DIR = '/app/models/'
+DATA_DIR = '/app/data/'
 HEADERS = {'Content-Type': 'application/json'}
 
 # Set up logging
