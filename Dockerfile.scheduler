@@ -30,9 +30,8 @@ RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
 COPY ./scheduler /app/scheduler
 
-COPY ./data /app/data
-
-COPY ./models /app/models
+# Define volumes for models and data
+VOLUME ["/app/models", "/app/data"]
 
 # Run the application using the Python module
 CMD ["python", "/app/scheduler/task.py"]
