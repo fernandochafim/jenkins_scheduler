@@ -30,7 +30,7 @@ RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
 COPY ./scheduler /app/scheduler
 
-COPY ./resources /app/resources
+COPY ./data /app/data
 
 COPY ./models /app/models
 
