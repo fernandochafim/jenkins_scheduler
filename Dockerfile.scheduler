@@ -30,9 +30,9 @@ RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
 COPY ./scheduler /app/scheduler
 
-# COPY ./resources /code/resources
+COPY ./resources /app/resources
 
-# COPY ./models /code/models
+COPY ./models /app/models
 
 # Run the application using the Python module
 CMD ["python", "/app/scheduler/task.py"]
